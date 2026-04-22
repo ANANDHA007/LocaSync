@@ -15,4 +15,5 @@ type Config struct {
 	Store        string
 	SyncMode     SyncMode
 	SyncInterval time.Duration
+	ClientID     string
 }

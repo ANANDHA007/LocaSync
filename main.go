@@ -19,7 +19,7 @@ func main() {
 		log.Info(err)
 	}
 
-	LocaSync.Set("Ak", "Anandh the programmer", "123")
+	LocaSync.Set("Ak", "Anandh the programmer")
 	LocaSync.Get("Ak")
 
 }

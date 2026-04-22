@@ -3,10 +3,12 @@ package core
 import (
 	"github.com/ANANDHA007/LocaSync/config"
 	"github.com/ANANDHA007/LocaSync/store"
+	"github.com/ANANDHA007/LocaSync/utils"
 )
 
 type LocaSync struct {
-	Store store.Store
+	Store    store.Store
+	ClientID string
 }
 
 func New(config config.Config) (LocaSync, error) {
@@ -14,18 +16,23 @@ func New(config config.Config) (LocaSync, error) {
 	if err != nil {
 		return LocaSync{}, err
 	}
+	clientId := config.ClientID
+	if config.ClientID == "" {
+		clientId = utils.GenerateClientID()
+	}
 	return LocaSync{
-		Store: store,
+		Store:    store,
+		ClientID: clientId,
 	}, nil
 }
 
-func (l *LocaSync) Set(key, value, clientId string) {
-	l.Store.Set(key, value, clientId)
+func (l *LocaSync) Set(key, value string) {
+	l.Store.Set(key, value, l.ClientID)
 }
 func (l *LocaSync) Get(key string) string {
 	value, _ := l.Store.Get(key)
 	return value
 }
-func (l *LocaSync) Delete(key, clientId string) {
-	l.Store.Delete(key, clientId)
+func (l *LocaSync) Delete(key string) {
+	l.Store.Delete(key, l.ClientID)
 }
